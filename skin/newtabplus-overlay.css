@@ -16,11 +16,19 @@
   -moz-box-orient: vertical;
 }
 
-#newtab-recently-closed ul li {
+#newtab-recently-closed-list li {
+  cursor: pointer;
   margin: 1ex;
   overflow: hidden;
   padding-left: 20px;
+  position: relative;
   text-overflow: ellipsis;
   width: 100%;
   -moz-box-orient: horizontal;
+}
+
+#newtab-recently-closed-list li img {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

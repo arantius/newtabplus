@@ -8,9 +8,6 @@
   <div id="newtab-recently-closed" class="newtab-cell" insertafter="newtab-grid">
     <div class="newtab-title">Recently Closed Tabs</div>
     <ul id="newtab-recently-closed-list">
-      <li><span>foo</span> <span><a href="x">bar</a></span> </li>
-      <li>bar</li>
-      <li>Mozilla Firefox Web Browser blah blah blah</li>
     </ul>
   </div>
 </div>

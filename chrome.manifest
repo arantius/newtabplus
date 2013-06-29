@@ -2,5 +2,3 @@ content newtabplus content/
 skin    newtabplus classic/1.0 skin/
 
 overlay about:newtab chrome://newtabplus/content/newtabplus-overlay.xul
-#style   chrome://browser/content/browser.xul chrome://newtabplus/skin/newtabplus-overlay.css
-#style   chrome://global/content/customizeToolbar.xul    chrome://newtabplus/skin/newtabplus-overlay.css
