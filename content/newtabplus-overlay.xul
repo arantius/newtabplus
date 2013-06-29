@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<?xml-stylesheet href='chrome://newtabplus/skin/newtabplus-overlay.css' type='text/css'?>
+<overlay id='kabl-overlay' xmlns='http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'>
+
+<script type='application/x-javascript' src='chrome://newtabplus/content/newtabplus-overlay.js'></script>
+
+<div id="newtab-horizontal-margin">
+  <div id="newtab-recently-closed" class="newtab-cell" insertafter="newtab-grid">
+    <div class="newtab-title">Recently Closed Tabs</div>
+    <ul id="newtab-recently-closed-list">
+      <li><span>foo</span> <span><a href="x">bar</a></span> </li>
+      <li>bar</li>
+      <li>Mozilla Firefox Web Browser blah blah blah</li>
+    </ul>
+  </div>
+</div>
+
+</overlay>
