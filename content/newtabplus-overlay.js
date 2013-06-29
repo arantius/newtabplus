@@ -1,4 +1,4 @@
-(function() {
+window.addEventListener('DOMContentLoaded', (function() {
   Components.utils.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
   let ss = Components.classes["@mozilla.org/browser/sessionstore;1"]
       .getService(Components.interfaces.nsISessionStore);
@@ -13,14 +13,12 @@
 
   if (PrivateBrowsingUtils.isWindowPrivate(window)
       || ss.getClosedTabCount(chromeWin) == 0
-      || true
   ) {
-    document.getElementById('newtab-recently-closed').display = 'none';
+    document.getElementById('newtab-recently-closed').style.display = 'none';
     return;
   }
 
   let undoItems = JSON.parse(ss.getClosedTabData(chromeWin));
   for (let i = 0; i < undoItems.length; i++) {
   }
-
-})();
+}), false);
