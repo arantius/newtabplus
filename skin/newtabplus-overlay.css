@@ -1,34 +1,48 @@
-#newtab-recently-closed {
+#newtabplus-wrapper {
   margin-left: 20px;
-  max-width: 300px;
-  min-width: 200px;
+  max-width: 500px;
+  min-width: 300px;
+  -moz-box-orient: vertical;
 }
 
-#newtab-recently-closed .newtab-title {
+#newtabplus-wrapper #newtabplus-recently-closed {
+  min-height: 200px;
+  /*max-height: 500px;*/
+  -moz-box-flex: 1;
+  -moz-margin-end: 0;
+}
+
+#newtabplus-wrapper > iframe
+{
+  top: 20px;
+  -moz-box-flex: 10;
+}
+
+#newtabplus-recently-closed .newtab-title {
   position: static;
 }
 
-#newtab-recently-closed,
-#newtab-recently-closed ul
+#newtabplus-recently-closed,
+#newtabplus-recently-closed ul
 {
   display: -moz-box;
   -moz-box-flex: 1;
   -moz-box-orient: vertical;
 }
 
-#newtab-recently-closed-list li {
+#newtabplus-recently-closed-list li {
   cursor: pointer;
   margin: 1ex;
   overflow: hidden;
-  padding-left: 20px;
   position: relative;
   text-overflow: ellipsis;
   width: 100%;
   -moz-box-orient: horizontal;
 }
 
-#newtab-recently-closed-list li img {
-  position: absolute;
-  top: 0;
-  left: 0;
+#newtabplus-recently-closed-list li image {
+  height: 16px;
+  margin-right: 4px;
+  vertical-align: bottom;
+  width: 16px;
 }

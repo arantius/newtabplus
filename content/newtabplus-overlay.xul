@@ -5,10 +5,16 @@
 <script type='application/x-javascript' src='chrome://newtabplus/content/newtabplus-overlay.js'></script>
 
 <div id="newtab-horizontal-margin">
-  <div id="newtab-recently-closed" class="newtab-cell" insertafter="newtab-grid">
-    <div class="newtab-title">Recently Closed Tabs</div>
-    <ul id="newtab-recently-closed-list">
-    </ul>
+  <div id="newtabplus-wrapper" insertafter="newtab-grid">
+    <div id="newtabplus-recently-closed" class="newtab-cell" insertafter="newtab-grid">
+      <div class="newtab-title">Recently Closed Tabs</div>
+      <ul id="newtabplus-recently-closed-list">
+      </ul>
+    </div>
+
+    <!--
+    <iframe src='about:sync-tabs'></iframe>
+    -->
   </div>
 </div>
 

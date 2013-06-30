@@ -1,7 +1,13 @@
+'use strict';
+
 window.addEventListener('DOMContentLoaded', (function() {
   Components.utils.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
   let ss = Components.classes["@mozilla.org/browser/sessionstore;1"]
       .getService(Components.interfaces.nsISessionStore);
+
+
+  let BLANK_SRC = 'data:image/gif;base64,'
+      + 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
   let chromeWin = window
       .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
@@ -14,7 +20,7 @@ window.addEventListener('DOMContentLoaded', (function() {
   if (PrivateBrowsingUtils.isWindowPrivate(window)
       || ss.getClosedTabCount(chromeWin) == 0
   ) {
-    document.getElementById('newtab-recently-closed').style.display = 'none';
+    document.getElementById('newtabplus-recently-closed').style.display = 'none';
     return;
   }
 
@@ -23,25 +29,24 @@ window.addEventListener('DOMContentLoaded', (function() {
     window.close();
   }
 
-  let cont = document.getElementById('newtab-recently-closed-list');
+  let cont = document.getElementById('newtabplus-recently-closed-list');
   let undoItems = JSON.parse(ss.getClosedTabData(chromeWin));
   for (let i = 0; i < undoItems.length; i++) {
     let undoItem = undoItems[i];
     let li = document.createElement('li');
-    li.textContent = undoItem.title;
     li.setAttribute('index', i);
     li.addEventListener('click', nav, false);
 
+    let img = document.createElement('image');
+    img.setAttribute('src', BLANK_SRC);
     if (undoItem.image) {
-      let img = document.createElement('img');
       let iconUrl = undoItem.image;
       if (/^https?:/.test(iconUrl)) iconUrl = 'moz-anno:favicon:' + iconUrl;
       img.setAttribute('src', iconUrl);
-      img.setAttribute('width', '16');
-      img.setAttribute('height', '16');
-      li.appendChild(img);
     }
+    li.appendChild(img);
 
+    li.appendChild(document.createTextNode(undoItem.title));
     cont.appendChild(li);
   }
 }), false);
