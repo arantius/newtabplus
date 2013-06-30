@@ -1,20 +1,19 @@
 #newtabplus-wrapper {
   margin-left: 20px;
-  max-width: 500px;
-  min-width: 300px;
+  max-width: 600px;
+  min-width: 462px;
   -moz-box-orient: vertical;
 }
 
 #newtabplus-wrapper #newtabplus-recently-closed {
+  min-height: 315px;
   min-height: 200px;
-  /*max-height: 500px;*/
   -moz-box-flex: 1;
   -moz-margin-end: 0;
 }
 
-#newtabplus-wrapper > iframe
-{
-  top: 20px;
+#newtabplus-wrapper > iframe {
+  margin-top: 20px;
   -moz-box-flex: 10;
 }
 
