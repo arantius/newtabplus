@@ -5,6 +5,7 @@ window.addEventListener('DOMContentLoaded', (function() {
   let ss = Components.classes["@mozilla.org/browser/sessionstore;1"]
       .getService(Components.interfaces.nsISessionStore);
 
+  Cu.import("resource://newtabplus/sync.js");
 
   let BLANK_SRC = 'data:image/gif;base64,'
       + 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
