@@ -1,4 +1,4 @@
 content newtabplus content/
 skin    newtabplus classic/1.0 skin/
 
-overlay about:newtab chrome://newtabplus/content/newtabplus-overlay.xul
+overlay about:newtab chrome://newtabplus/content/overlay.xul

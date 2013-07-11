@@ -3,7 +3,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>newtabplus@arantius.com</em:id>
     <em:name>New Tab Plus</em:name>
-    <em:version>1</em:version>
+    <em:version>2</em:version>
     <em:description>Add extra navigation options to the new tab page.</em:description>
     <em:type>2</em:type>
 
