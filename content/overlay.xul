@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://newtabplus/skin/overlay.css" type="text/css"?>
-<overlay id="kabl-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<xul:overlay id="kabl-overlay"
+  xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  xmlns="http://www.w3.org/1999/xhtml"
+>
 
 <script type="application/x-javascript" src="chrome://newtabplus/content/overlay.js"></script>
 
@@ -20,4 +23,4 @@
   </div>
 </div>
 
-</overlay>
+</xul:overlay>

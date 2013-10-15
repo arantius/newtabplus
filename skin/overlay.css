@@ -1,4 +1,17 @@
+#newtab-grid {
+  min-width: 300px !important;
+}
+.newtab-side-margin {
+  max-width: 150px !important;
+}
+
+div[page-disabled] #newtabplus-wrapper {
+  display: none;
+  pointer-events: none;
+}
+
 #newtabplus-wrapper {
+  display: -moz-box;
   margin-left: 20px;
   max-width: 400px;
   min-width: 250px;
@@ -23,8 +36,10 @@
 .newtabplus-section ul {
   display: -moz-box;
   height: 100%;
+  margin: 1ex;
   overflow-x: hidden;
   overflow-y: auto;
+  padding: 0;
   width: 100%;
   -moz-box-orient: vertical;
 }

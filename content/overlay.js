@@ -39,8 +39,14 @@ function addListItem(aList, aTitle, aIcon) {
 }
 
 function loadRecent() {
+  let undoItems;
+  try {
+    undoItems = JSON.parse(ss.getClosedTabData(chromeWin));
+  } catch (e) {
+    return;
+  }
+
   let cont = document.getElementById('newtabplus-recently-closed-list');
-  let undoItems = JSON.parse(ss.getClosedTabData(chromeWin));
   let seenUrls = {};
   for (let i = 0; i < undoItems.length; i++) {
     let undoItem = undoItems[i];
@@ -93,14 +99,29 @@ function navSync(aEvent) {
 }
 
 window.addEventListener('DOMContentLoaded', (function() {
-  if (PrivateBrowsingUtils.isWindowPrivate(window)
-      || ss.getClosedTabCount(chromeWin) == 0
-  ) {
+  dump('>> domcontent loaded ...\n');
+  dump(chromeWin + '\n');
+  if (PrivateBrowsingUtils.isWindowPrivate(window)) {
     document.getElementById('newtabplus-wrapper').style.display = 'none';
     return;
   }
 
-  loadRecent();
+  var haveClosedTabs;
+  try {
+    haveClosedTabs = ss.getClosedTabCount(chromeWin) != 0;
+  } catch (e) {
+    // Sometimes unexplicable:
+    //   [Exception... "'Illegal value' when calling method:
+    //   [nsISessionStore::getClosedTabCount]"  nsresult: "0x80070057
+    //   (NS_ERROR_ILLEGAL_VALUE)"
+    // Ignoring it seems to be fine. (?)
+    haveClosedTabs = false;
+  }
+  if (haveClosedTabs) {
+    loadRecent();
+  } else {
+    document.getElementById('newtabplus-section-recent').style.display = 'none';
+  }
 
   // TODO: Force first-launch log in/sync/refresh?
   let tabSyncEnabled = Weave.Service.isLoggedIn
