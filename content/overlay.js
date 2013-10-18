@@ -2,23 +2,17 @@
 (function() {
 
 Components.utils.import("resource://gre/modules/PrivateBrowsingUtils.jsm");
+Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 Components.utils.import("resource://services-sync/main.js");
 Components.utils.import("resource://services-sync/service.js");
 
 const ss = Components.classes["@mozilla.org/browser/sessionstore;1"]
     .getService(Components.interfaces.nsISessionStore);
-
 const BLANK_SRC = 'data:image/gif;base64,'
     + 'R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+const $ = function(aId) { return document.getElementById(aId); };
 
-// Find the chrome window that contains this "content" window.
-const chromeWin = window
-    .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-    .getInterface(Components.interfaces.nsIWebNavigation)
-    .QueryInterface(Components.interfaces.nsIDocShellTreeItem)
-    .rootTreeItem
-    .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-    .getInterface(Components.interfaces.nsIDOMWindow);
+let chromeWin = getChromeWin();
 
 function addListItem(aList, aTitle, aIcon) {
   let li = document.createElement('li');
@@ -38,6 +32,12 @@ function addListItem(aList, aTitle, aIcon) {
   return li;
 }
 
+function getChromeWin() {
+  return Components.classes["@mozilla.org/appshell/window-mediator;1"]
+      .getService(Components.interfaces.nsIWindowMediator)
+      .getMostRecentWindow('navigator:browser');
+}
+
 function loadRecent() {
   let undoItems;
   try {
@@ -45,6 +45,10 @@ function loadRecent() {
   } catch (e) {
     return;
   }
+  if (!undoItems) return;
+  $('newtabplus-wrapper').style.display = '-moz-box';
+  $('newtabplus-section-recent').style.display = '-moz-box';
+
 
   let cont = document.getElementById('newtabplus-recently-closed-list');
   let seenUrls = {};
@@ -61,12 +65,13 @@ function loadRecent() {
   }
 }
 
-function navRecent(event) {
-  chromeWin.undoCloseTab(parseInt(event.target.getAttribute('index'), 10));
-  window.close();
-}
-
 function loadSync() {
+  // TODO: Force first-launch log in/sync/refresh?
+  let tabSyncEnabled = Weave.Service.isLoggedIn
+      && Weave.Service.engineManager.get("tabs")
+      && Weave.Service.engineManager.get("tabs").enabled;
+  if (!tabSyncEnabled) return;
+
   let tabsEngine = Weave.Service.engineManager.get("tabs");
   let tabs = {};
   for each (let client in tabsEngine.getAllClients()) {
@@ -77,18 +82,35 @@ function loadSync() {
       }
     });
   }
-
-  let cont = document.getElementById('newtabplus-sync-list');
   let tabsArray = [];
   for (let i in tabs) tabsArray.push(tabs[i]);
   tabsArray.sort(function(a, b) { return b.lastUsed - a.lastUsed; });
+
+  if (0 == tabsArray.length) return;
+  $('newtabplus-wrapper').style.display = '-moz-box';
+  $('newtabplus-section-sync').style.display = '-moz-box';
+
+  let cont = document.getElementById('newtabplus-sync-list');
+  let urlsSeen = {};
+  let count = 0
   for (let i = 0; i < tabsArray.length; i++) {
-    if (10 == i) break;
     let tab = tabsArray[i];
-    let li = addListItem(cont, tab.title, tab.icon);
-    li.setAttribute('href', tab.urlHistory[0]);
+    let url = url;
+    if (url in urlsSeen) continue;
+    urlsSeen[url] = 1;
+
+    count += 1;
+    if (10 == count) break;
+
+    let li = addListItem(cont, tab.title || url, tab.icon);
+    li.setAttribute('href', url);
     li.addEventListener('click', navSync, false);
   }
+}
+
+function navRecent(event) {
+  chromeWin.undoCloseTab(parseInt(event.target.getAttribute('index'), 10));
+  window.close();
 }
 
 function navSync(aEvent) {
@@ -99,40 +121,8 @@ function navSync(aEvent) {
 }
 
 window.addEventListener('DOMContentLoaded', (function() {
-  dump('>> domcontent loaded ...\n');
-  dump(chromeWin + '\n');
-  if (PrivateBrowsingUtils.isWindowPrivate(window)) {
-    document.getElementById('newtabplus-wrapper').style.display = 'none';
-    return;
-  }
-
-  var haveClosedTabs;
-  try {
-    haveClosedTabs = ss.getClosedTabCount(chromeWin) != 0;
-  } catch (e) {
-    // Sometimes unexplicable:
-    //   [Exception... "'Illegal value' when calling method:
-    //   [nsISessionStore::getClosedTabCount]"  nsresult: "0x80070057
-    //   (NS_ERROR_ILLEGAL_VALUE)"
-    // Ignoring it seems to be fine. (?)
-    haveClosedTabs = false;
-  }
-  if (haveClosedTabs) {
-    loadRecent();
-  } else {
-    document.getElementById('newtabplus-section-recent').style.display = 'none';
-  }
-
-  // TODO: Force first-launch log in/sync/refresh?
-  let tabSyncEnabled = Weave.Service.isLoggedIn
-      && Weave.Service.engineManager.get("tabs")
-      && Weave.Service.engineManager.get("tabs").enabled;
-  if (tabSyncEnabled) {
-    loadSync();
-  } else {
-    document.getElementById('newtabplus-section-sync').style.display = 'none';
-  }
-
+  loadRecent();
+  loadSync();
 }), false);
 
 })();

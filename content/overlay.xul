@@ -5,7 +5,10 @@
   xmlns="http://www.w3.org/1999/xhtml"
 >
 
-<script type="application/x-javascript" src="chrome://newtabplus/content/overlay.js"></script>
+<script
+    type="application/x-javascript;version=1.8"
+    src="chrome://newtabplus/content/overlay.js"
+></script>
 
 <div id="newtab-horizontal-margin">
   <div id="newtabplus-wrapper" insertafter="newtab-grid">

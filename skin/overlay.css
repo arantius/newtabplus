@@ -1,3 +1,10 @@
+/* Invisible by default until we detect we have something to put. */
+#newtabplus-wrapper,
+#newtabplus-wrapper .newtabplus-section
+{
+  display: none;
+}
+
 #newtab-grid {
   min-width: 300px !important;
 }
@@ -11,15 +18,13 @@ div[page-disabled] #newtabplus-wrapper {
 }
 
 #newtabplus-wrapper {
-  display: -moz-box;
   margin-left: 20px;
-  max-width: 400px;
-  min-width: 250px;
   -moz-box-orient: vertical;
 }
 
 #newtabplus-wrapper .newtabplus-section {
-  display: -moz-box;
+  max-width: 400px;
+  min-width: 250px;
   -moz-box-flex: 1;
   -moz-box-orient: vertical;
   -moz-margin-end: 0;
